@@ -99,3 +99,11 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# JetBrains - PyCharm
+.idea/
+
+#Project files
+config.info
+/output
+/datasets
