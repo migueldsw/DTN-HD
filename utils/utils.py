@@ -2,6 +2,8 @@
 General project utils
 """
 
+import os.path
+
 DATASET_ROOT_PATH = ''
 IMAGE_LIST_FILE = ''
 COMPLETE_TAGS_FILE = ''
@@ -10,7 +12,7 @@ TEXT_DATA_FILE = ''
 TAG_LIST_FILE = ''
 
 
-with open('../config.info') as f:
+with open(os.path.dirname(__file__) + '/../config.info') as f:
     content = f.readlines()
 lines = [x.strip() for x in content]
 
