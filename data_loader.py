@@ -20,6 +20,18 @@ def load_image(image_path, show=False):
     return im
 
 
+def crop_image(img, x, y, w, h):
+    return img[y: y + h, x: x + w]
+
+
+def desc_image_list(img_list):
+    shape_list = [i.shape for i in img_list]
+    shape_list = np.array(shape_list)
+    y_list = shape_list[:, 0]
+    x_list = shape_list[:, 1]
+    print('x min/max: %d / %d\ny min/max: %d / %d' % (np.min(x_list), np.max(x_list), np.min(y_list), np.max(y_list)))
+
+
 def load_tags1k():
     # f = open(DATA_PATH, 'r')
     # lines =  [x.strip('\n') for x in f.readlines()]
