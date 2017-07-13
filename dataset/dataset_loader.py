@@ -4,7 +4,7 @@ Loads all data set content
 
 import numpy as np
 import pandas as pd
-from utils import DATASET_ROOT_PATH, IMAGE_LIST_FILE, COMPLETE_TAGS_FILE
+from utils import IMAGE_LIST_FILE, COMPLETE_TAGS_FILE
 
 CATEGORIES_LIST = ['birds',
                    'building',
@@ -29,7 +29,7 @@ def read_text_file(path):
 
 
 def load_image_list():
-    lines = read_text_file(DATASET_ROOT_PATH + IMAGE_LIST_FILE)
+    lines = read_text_file(IMAGE_LIST_FILE)
     nlines = []
     for l in lines:
         a = l.split("\\")
@@ -47,7 +47,7 @@ def load_image_list():
 
 
 def load_all_tags():
-    lines = read_text_file(DATASET_ROOT_PATH + COMPLETE_TAGS_FILE)
+    lines = read_text_file(COMPLETE_TAGS_FILE)
     nlines = []
     for l in lines:
         a = l.split("      ")
@@ -67,10 +67,12 @@ def load_all_data():
     imagelist = load_image_list()
     all_tags = load_all_tags()
     all_data = pd.concat([imagelist, all_tags], axis=1)
-    print all_data.shape
     return all_data
 
 
 if __name__ == "__main__":
     all_data = load_all_data()
+    print ("All data: ")
+    print (all_data.head())
+    print ("Shape: %s" % str(all_data.shape))
     print("All data len.: %d" % len(all_data))
