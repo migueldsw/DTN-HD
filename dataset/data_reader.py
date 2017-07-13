@@ -1,11 +1,11 @@
 """
-Read dataset files (images and texts)
+Reads data set data files (images and texts)
 """
 
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
-from utils.utils import TEXT_DATA_FILE, TAG_LIST_FILE
+from dataset.utils import TEXT_DATA_FILE, TAG_LIST_FILE
 
 
 def show_image(im):
