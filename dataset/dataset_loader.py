@@ -66,13 +66,26 @@ def load_all_tags():
 def load_all_data():
     imagelist = load_image_list()
     all_tags = load_all_tags()
-    all_data = pd.concat([imagelist, all_tags], axis=1)
-    return all_data
+    return pd.concat([imagelist, all_tags], axis=1)
 
+
+def get_category(category):
+    """
+    get all instances from the same category
+    :param category: category label string
+    :return: data frame with category instances
+    """
+    return FULL_DATA.loc[FULL_DATA['category'] == category]
+
+
+FULL_DATA = load_all_data()
+DATA = pd.DataFrame()
+for cat in CATEGORIES_LIST:
+    DATA = DATA.append(get_category(cat))
 
 if __name__ == "__main__":
-    all_data = load_all_data()
     print ("All data: ")
-    print (all_data.head())
-    print ("Shape: %s" % str(all_data.shape))
-    print("All data len.: %d" % len(all_data))
+    print (FULL_DATA.head())
+    print ("Shape: %s" % str(FULL_DATA.shape))
+    print("Full data len.: %d" % len(FULL_DATA))
+    print("Data len.: %d" % len(DATA))
