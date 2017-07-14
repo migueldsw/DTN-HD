@@ -14,9 +14,17 @@ def show_image(im):
 
 
 def load_image(image_path, show=False):
-    im = cv2.imread(image_path)
+    im = np.array([])
+    if type(image_path) is str:
+        im = cv2.imread(image_path)
+        im_show = im
+    elif type(image_path) is list:
+        im = np.array([load_image(p) for p in image_path])
+        im_show = im[0]
+    else:
+        raise ValueError('Invalid image path (use: str or [str])!!!')
     if show:
-        show_image(im)
+        show_image(im_show)
     return im
 
 

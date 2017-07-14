@@ -4,7 +4,8 @@ Loads all data set content
 
 import numpy as np
 import pandas as pd
-from utils import IMAGE_LIST_FILE, COMPLETE_TAGS_FILE
+from data_reader import load_image
+from utils import IMAGE_LIST_FILE, COMPLETE_TAGS_FILE, IMAGES_PATH
 
 CATEGORIES_LIST = ['birds',
                    'building',
@@ -78,6 +79,12 @@ def get_category(category):
     return FULL_DATA.loc[FULL_DATA['category'] == category]
 
 
+def image_file_path(index):
+    inst = FULL_DATA.iloc[index]
+    file_path = IMAGES_PATH + '%s/%s_%s.jpg' % (inst.category, inst.prefix, inst.PID)
+    return file_path
+
+
 FULL_DATA = load_all_data()
 DATA = pd.DataFrame()
 for cat in CATEGORIES_LIST:
@@ -87,5 +94,10 @@ if __name__ == "__main__":
     print ("All data: ")
     print (FULL_DATA.head())
     print ("Shape: %s" % str(FULL_DATA.shape))
-    print("Full data len.: %d" % len(FULL_DATA))
-    print("Data len.: %d" % len(DATA))
+    print ("Full data len.: %d" % len(FULL_DATA))
+    print ("Data len.: %d" % len(DATA))
+    print ("test image ...")
+    ip = image_file_path(79233)
+    print (ip)
+    im = load_image(ip, show=False)
+    print (im.shape)
