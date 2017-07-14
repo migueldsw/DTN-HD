@@ -4,7 +4,7 @@ Loads all data set content
 
 import numpy as np
 import pandas as pd
-from data_reader import load_image
+from data_reader import load_image, get_text_data
 from utils import IMAGE_LIST_FILE, COMPLETE_TAGS_FILE, IMAGES_PATH
 
 CATEGORIES_LIST = ['birds',
@@ -85,10 +85,35 @@ def image_file_path(index):
     return file_path
 
 
+def desc_images(img_list):
+    shape_list = [i.shape for i in img_list]
+    shape_list = np.array(shape_list)
+    y_list = shape_list[:, 0]
+    x_list = shape_list[:, 1]
+    print('x min/max: %d / %d\ny min/max: %d / %d' % (np.min(x_list), np.max(x_list), np.min(y_list), np.max(y_list)))
+
+
+def raw_image_x():
+    """
+    Compose image img_X from DATA
+    :return: list of image data: [np.array{shape: h,w,3}]
+    """
+    index_list = DATA.index.values
+    return load_image([image_file_path(i) for i in index_list])
+
+
+def raw_txt_x():
+    return get_text_data(DATA.index.values)
+
+#TODO cache data arrays and dataframes
+#TODO check/load/save data arrays and dataframes
+
 FULL_DATA = load_all_data()
-DATA = pd.DataFrame()
+DATA = pd.DataFrame()  # data of interest
 for cat in CATEGORIES_LIST:
     DATA = DATA.append(get_category(cat))
+raw_img_X = raw_image_x()
+raw_txt_X = raw_txt_x()
 
 if __name__ == "__main__":
     print ("All data: ")
@@ -101,3 +126,9 @@ if __name__ == "__main__":
     print (ip)
     im = load_image(ip, show=False)
     print (im.shape)
+    print ("Image X: shape:")
+    print (raw_img_X.shape)
+    desc_images(raw_img_X)
+    print ("Text X: shape:")
+    print (raw_txt_X.shape)
+

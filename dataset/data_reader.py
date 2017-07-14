@@ -42,11 +42,11 @@ def desc_image_list(img_list):
 
 def load_tags1k():
     # f = open(DATA_PATH, 'r')
-    # lines =  [x.strip('\n') for x in f.readlines()]
-    # TEMP STUB
     with open(TEXT_DATA_FILE) as myfile:
-        head = [next(myfile) for x in xrange(500)]
-    lines = head
+        lines = [x.strip('\n') for x in myfile.readlines()]
+    # TEMP TEST STUB
+    #    head = [next(myfile) for x in xrange(500)]
+    #lines = head
     #
     nlines = []
     for l in lines:
@@ -77,5 +77,16 @@ def tags1k_words(occurrences):
     return out
 
 
+def get_text_data(index_list):
+    return np.array([words_data[i] for i in index_list])
+
 tag_list = get_tags_list()
 tag_list = [i.split('\r')[0] for i in tag_list]
+
+if __name__ == "__main__":
+    print ("Length tag_list:")
+    print (len(tag_list))
+    print ("words_data.shape")
+    print (words_data.shape)
+    print ("TEST OF TEXT DATA")
+    print (get_text_data([1,1000,4000,3]).shape)
