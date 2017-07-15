@@ -14,7 +14,6 @@ def show_image(im):
 
 
 def load_image(image_path, show=False):
-    im = np.array([])
     if type(image_path) is str:
         im = cv2.imread(image_path)
         im_show = im
@@ -46,7 +45,7 @@ def load_tags1k():
         lines = [x.strip('\n') for x in myfile.readlines()]
     # TEMP TEST STUB
     #    head = [next(myfile) for x in xrange(500)]
-    #lines = head
+    # lines = head
     #
     nlines = []
     for l in lines:
@@ -55,11 +54,8 @@ def load_tags1k():
     return np.array(nlines)
 
 
-words_data = load_tags1k()
-
-
 def load_tags(index_list):
-    return np.array([words_data[i] for i in index_list])
+    return np.array([load_tags1k()[i] for i in index_list])
 
 
 def get_tags_list():
@@ -69,24 +65,26 @@ def get_tags_list():
     return np.array(lines)
 
 
+def tag_list():
+    return [i.split('\r')[0] for i in get_tags_list()]
+
+
 def tags1k_words(occurrences):
     out = []
     for i in range(len(occurrences)):
         if occurrences[i] > 0:
-            out.append(tag_list[i])
+            out.append(tag_list()[i])
     return out
 
 
 def get_text_data(index_list):
-    return np.array([words_data[i] for i in index_list])
-
-tag_list = get_tags_list()
-tag_list = [i.split('\r')[0] for i in tag_list]
+    return np.array([load_tags1k()[i] for i in index_list])
 
 if __name__ == "__main__":
+    words_data = load_tags1k()
     print ("Length tag_list:")
-    print (len(tag_list))
+    print (len(tag_list()))
     print ("words_data.shape")
     print (words_data.shape)
     print ("TEST OF TEXT DATA")
-    print (get_text_data([1,1000,4000,3]).shape)
+    print (get_text_data([1, 1000, 4000, 3]).shape)
