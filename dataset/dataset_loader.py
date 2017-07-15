@@ -105,8 +105,22 @@ def raw_image_x():
 def raw_txt_x():
     return get_text_data(DATA.index.values)
 
-#TODO cache data arrays and dataframes
-#TODO check/load/save data arrays and dataframes
+
+def one_hot_category_encode(category):
+    out = np.zeros(10)
+    for i in range(len(CATEGORIES_LIST)):
+        if category == CATEGORIES_LIST[i]:
+            out[i] = 1
+    if out.sum() == 0:
+        raise ValueError('Unknown category!!!')
+    return out
+
+
+def raw_one_hot_y():
+    return np.array([one_hot_category_encode(s) for s in DATA['category'].tolist() ])
+
+# TODO cache data arrays and dataframes
+# TODO check/load/save data arrays and dataframes
 
 FULL_DATA = load_all_data()
 DATA = pd.DataFrame()  # data of interest
@@ -114,6 +128,8 @@ for cat in CATEGORIES_LIST:
     DATA = DATA.append(get_category(cat))
 raw_img_X = raw_image_x()
 raw_txt_X = raw_txt_x()
+y = raw_one_hot_y()
+
 
 if __name__ == "__main__":
     print ("All data: ")
@@ -131,4 +147,5 @@ if __name__ == "__main__":
     desc_images(raw_img_X)
     print ("Text X: shape:")
     print (raw_txt_X.shape)
-
+    print ("Y: shape:")
+    print (y.shape)
