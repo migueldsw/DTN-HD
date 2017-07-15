@@ -5,7 +5,7 @@ Loads all data set content
 import numpy as np
 import pandas as pd
 from data_reader import load_image, get_text_data
-from utils import IMAGE_LIST_FILE, COMPLETE_TAGS_FILE, IMAGES_PATH
+from utils import IMAGE_LIST_FILE, COMPLETE_TAGS_FILE, IMAGES_PATH, check_cache_path, save_cache, load_cache
 
 CATEGORIES_LIST = ['birds',
                    'building',
@@ -117,19 +117,24 @@ def one_hot_category_encode(category):
 
 
 def raw_one_hot_y():
-    return np.array([one_hot_category_encode(s) for s in DATA['category'].tolist() ])
+    return np.array([one_hot_category_encode(s) for s in DATA['category'].tolist()])
 
-# TODO cache data arrays and dataframes
-# TODO check/load/save data arrays and dataframes
 
 FULL_DATA = load_all_data()
 DATA = pd.DataFrame()  # data of interest
 for cat in CATEGORIES_LIST:
     DATA = DATA.append(get_category(cat))
-raw_img_X = raw_image_x()
-raw_txt_X = raw_txt_x()
-y = raw_one_hot_y()
-
+if check_cache_path():
+    raw_img_X = load_cache('img_x')
+    raw_txt_X = load_cache('txt_x')
+    y = load_cache('y')
+else:
+    raw_img_X = raw_image_x()
+    raw_txt_X = raw_txt_x()
+    y = raw_one_hot_y()
+    save_cache('img_x', raw_img_X)
+    save_cache('txt_x', raw_txt_X)
+    save_cache('y', y)
 
 if __name__ == "__main__":
     print ("All data: ")
