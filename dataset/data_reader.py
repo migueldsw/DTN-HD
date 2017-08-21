@@ -54,8 +54,11 @@ def load_tags1k():
     return np.array(nlines)
 
 
+TAGS_1K = load_tags1k()
+
+
 def load_tags(index_list):
-    return np.array([load_tags1k()[i] for i in index_list])
+    return np.array([TAGS_1K[i] for i in index_list])
 
 
 def get_tags_list():
@@ -78,10 +81,11 @@ def tags1k_words(occurrences):
 
 
 def get_text_data(index_list):
-    return np.array([load_tags1k()[i] for i in index_list])
+    return np.array([TAGS_1K[i] for i in index_list])
+
 
 if __name__ == "__main__":
-    words_data = load_tags1k()
+    words_data = TAGS_1K
     print ("Length tag_list:")
     print (len(tag_list()))
     print ("words_data.shape")
