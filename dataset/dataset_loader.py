@@ -125,9 +125,11 @@ DATA = pd.DataFrame()  # data of interest
 for cat in CATEGORIES_LIST:
     DATA = DATA.append(get_category(cat))
 if check_cache_path():
+    print "Loading data cache ..."
     raw_img_X = load_cache('img_x')
     raw_txt_X = load_cache('txt_x')
     y = load_cache('y')
+    print "Loaded!"
 else:
     raw_img_X = raw_image_x()
     raw_txt_X = raw_txt_x()
