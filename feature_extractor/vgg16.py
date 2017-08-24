@@ -9,6 +9,7 @@ from keras.layers import Conv2D
 from keras.layers import Flatten
 from keras.layers import MaxPooling2D as MaxPool
 from keras.models import Model
+from dataset.utils import save_cache
 
 
 def create_vgg16(num_classes=10):
@@ -63,6 +64,11 @@ def extract_vgg_features(X, model):
     features = np.array(features)
     features = features.reshape(features.shape[2:])
     return features
+
+
+def save_features(data, model, filename):
+    features = extract_vgg_features(data, model)
+    save_cache('features', features)
 
 if __name__ == "__main__":
     model = create_vgg16()
