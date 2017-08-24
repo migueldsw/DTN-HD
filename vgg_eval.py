@@ -15,4 +15,4 @@ if __name__ == "__main__":
     print(datetime.datetime.now())
     print "started in: "
     print ct
-    save_features(X, model, "features_vgg")
+    save_features(X, model)

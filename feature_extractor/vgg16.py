@@ -59,16 +59,17 @@ def extract_vgg_features(X, model):
     features = []
     inpt = model.input
     output = model.layers[layer_index].output
-    func = K.function([inpt]+[K.learning_phase()],[output])
-    features.append(func([X]))
+    func = K.function([inpt]+[K.learning_phase()], [output])
+    for x in X:
+        features.append(func([np.array([x])]))
     features = np.array(features)
-    features = features.reshape(features.shape[2:])
+    features = features.reshape((features.shape[0], features.shape[-1]))
     return features
 
 
-def save_features(data, model, filename):
+def save_features(data, model):
     features = extract_vgg_features(data, model)
-    save_cache('features', features)
+    save_cache('xf', features)
 
 if __name__ == "__main__":
     model = create_vgg16()
