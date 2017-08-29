@@ -107,4 +107,4 @@ ENV/
 config.info
 /output
 /datasets
-dataset/array_cache
+/array_cache
