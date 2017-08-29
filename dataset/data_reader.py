@@ -52,8 +52,6 @@ def load_tags1k():
         a = l.split("\t")
         nlines.append([int(i) for i in a[0:-1]])
     return np.array(nlines)
-
-
 TAGS_1K = load_tags1k()
 
 
@@ -70,13 +68,14 @@ def get_tags_list():
 
 def tag_list():
     return [i.split('\r')[0] for i in get_tags_list()]
+COMPLETE_TAG_LIST = tag_list()
 
 
 def tags1k_words(occurrences):
     out = []
     for i in range(len(occurrences)):
         if occurrences[i] > 0:
-            out.append(tag_list()[i])
+            out.append(COMPLETE_TAG_LIST[i])
     return out
 
 

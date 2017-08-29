@@ -4,7 +4,7 @@ Loads all data set content
 
 import numpy as np
 import pandas as pd
-from data_reader import load_image, get_text_data
+from data_reader import load_image, get_text_data, tags1k_words
 from utils import IMAGE_LIST_FILE, COMPLETE_TAGS_FILE, IMAGES_PATH, check_cache_path, save_cache, load_cache
 
 CATEGORIES_LIST = ['birds',
@@ -120,6 +120,10 @@ def raw_one_hot_y():
     return np.array([one_hot_category_encode(s) for s in DATA['category'].tolist()])
 
 
+def get_words(text_1k_array):
+    return tags1k_words(text_1k_array)
+
+
 FULL_DATA = load_all_data()
 DATA = pd.DataFrame()  # data of interest
 for cat in CATEGORIES_LIST:
@@ -156,3 +160,9 @@ if __name__ == "__main__":
     print (raw_txt_X.shape)
     print ("Y: shape:")
     print (y.shape)
+
+    print "WORDS TEST:"
+    words = np.zeros(1000)
+    for i in [10, 11, 40, 300, 950, 999, 0, 600, 22, 33]:
+        words[i] = 1
+        print get_words(words)
